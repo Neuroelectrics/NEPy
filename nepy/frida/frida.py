@@ -20,6 +20,10 @@ from nepy.capsule.capsule import Capsule
 
 
 class Frida(object):
+    """
+    Frida is a class that contains a capsule object to process the data, the necessary parameters and methods to do a
+    quality check (QC), and to preprocess the data if necessary.
+    """
 
     def __init__(self, filepath, author="anonymous", parameters=None):
 
