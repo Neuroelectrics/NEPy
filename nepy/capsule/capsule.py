@@ -49,7 +49,7 @@ class Capsule(object):
         # From user
         self.author = author
 
-        # From readers
+        # From Readers
         self.capsuledate = time.strftime("%Y-%m-%d %H:%M")
         self.eegstartdate = rdr.eegstartdate
         self.log = ["capsule created: " + self.capsuledate]
@@ -66,19 +66,12 @@ class Capsule(object):
         self.np_stim = rdr.np_stim
         self.filenameroot = rdr.filenameroot
 
-        # From Frida:
-        self.badRecords = None
+        # From Frida
         self.offsets = None
         self.sigmas = None
         self.PSD = None
-        self.reference_electrodes = None
-        self.fline = None
-        self.Q = None
-        self.fL = None
-        self.fH = None
-        self.detrendtime = None
-        self.QCthreshold = None
-            
+        self.bad_records = None
+
     def __repr__(self):
         form = """\033[1mCapsule object created by {author} on {date} from file:\033[0m \n            
             - {fil}
