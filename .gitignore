@@ -60,3 +60,6 @@ target/
 # GitKraken
 .idea
 .idea/*
+
+# Jupyter notebook
+.ipynb_checkpoints
