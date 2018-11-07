@@ -1,5 +1,5 @@
 """
-Simplified version of a Frida (object format).
+Simplified version of a Frida in an object format (from Giulio's code).
 
 2018 Neuroelectrics Corporation
 
@@ -101,7 +101,7 @@ class Frida(object):
     def preprocess(self, pipeline=None):
 
         if pipeline is None:
-            pipeline = ['rereferenceData', 'detrendData', 'notch', 'bandpassfilter']
+            pipeline = ['resetEEG', 'referenceData', 'detrendData', 'notch', 'bandpassfilter']
 
         print('---PREPROCESSING---')
         print("Pipeline:")
