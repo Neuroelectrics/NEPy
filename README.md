@@ -38,6 +38,9 @@ from nepy.frida.frida import Frida
 from nepy.frida.batch import processDirectory
 ```
 
+Check our [Jupyter Notebook Demos](http://git.starlab.es/Sanchez/nepy_support/tree/master/demos " NE jupyter demos") 
+(or .html version) for a great example on how to proper use this module! 
+
 ## Contributing
 1. Fork it (<https://github.com/sr6033/lterm/fork>)
 2. Create your feature branch (`git checkout -b feature/fooBar`)
@@ -45,3 +48,14 @@ from nepy.frida.batch import processDirectory
 4. Push to the branch (`git push origin feature/fooBar`)
 5. Create a new Pull Request
 
+![alt text](./images/gitflow.png)
+
+Check the *CONTRIBUTING.md* file for more information.
+
+## Authors
+Main: Giulio Ruffini and Roser Sanchez  
+Contributors: Sergi Aregall and Javier Acedo.
+
+#####Neuroelectrics, November 2018
+
+![alt text](./images/enobio.jpg)
