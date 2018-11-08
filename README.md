@@ -58,6 +58,6 @@ Check the *CONTRIBUTING.md* file for more information.
 Main: Giulio Ruffini and Roser Sanchez  
 Contributors: Sergi Aregall and Javier Acedo.
 
-####Neuroelectrics, November 2018
+#### Neuroelectrics, November 2018
 
 ![alt text](./images/enobio.jpg)
