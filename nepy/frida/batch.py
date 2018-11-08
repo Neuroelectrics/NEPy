@@ -1,9 +1,9 @@
 """
 Batch processor tools, will apply pipelines properly  to files in a dir
-Created on Sat Feb  3 09:20:00 2018
-Modified on Tue Nov 6 07:49:55 2018
+Created on Sat Feb  3 09:20:00 2018 (giulio)
+Modified on Tue Nov 6 07:49:55 2018 (roser)
 
-@author: giulio
+@author: giulio and roser
 """
 
 from __future__ import absolute_import, division, print_function, unicode_literals
@@ -14,7 +14,7 @@ import os
 from nepy.frida.frida import Frida
 
 
-def processDirectory(datadir, author='anonymous', pipeline=None, parameters=None):
+def processDirectory(datapath, author='anonymous', pipeline=None, parameters=None):
     """ Process all .easy or .easy.gz files in data's directory using Frida.
     :param datadir: directory of the folder containing the data.
     :param author: ('anonymous') user.
@@ -23,11 +23,8 @@ def processDirectory(datadir, author='anonymous', pipeline=None, parameters=None
     :return: list of processed and skipped files.
 
     Example of use:
-    >>> [processed, skipped] = processDirectory(datadir)
+    >>> [processed, skipped] = processDirectory(datapath)
     """
-
-    if pipeline is None:
-        pipeline = ['resetEEG', 'rereferenceData', 'detrendData', 'notch', 'bandpassfilter']
 
     saved_args = locals()
     print("Running with these arguments:", saved_args)
@@ -37,17 +34,21 @@ def processDirectory(datadir, author='anonymous', pipeline=None, parameters=None
     processed = []
     skipped = []
 
-    for fil in os.listdir(datadir):
+    for fil in os.listdir(datapath):
         if fil.endswith((".easy", ".easy.gz", ".nedf")):
             print("\n\n##########################################################################\n")
-            filepath = datadir + "/" + fil
+            filepath = datapath + "/" + fil
             print("         Processing", filepath, )
             print("##########################################################################\n\n")
             try:
                 f = Frida(filepath, author=author, parameters=parameters)
+                f.plotEEG()
+                f.plotPSD()
                 f.QC()
                 f.preprocess(pipeline)
                 f.QC()
+                f.plotEEG()
+                f.plotPSD()
             except:
                 print("Something is wrong with this file, skipping...")
                 f = 0
