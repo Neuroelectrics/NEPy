@@ -21,7 +21,7 @@ can find a description of the module, its main attributes, methods and useful ex
 #### Prerequisites
 - NEpy *should* work on the following operating systems: Windows, Mac OS and Linux.  
 - It works with Python 3.x
-- Size: around 93,0 MB
+- Size: around 95,0 MB
 #### Installation
 1. Clone or download the NEpy repository in your computer.  
 2. Copy and paste the path where you have saved the repository in a variable
