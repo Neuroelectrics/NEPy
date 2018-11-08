@@ -1,5 +1,7 @@
 # NEpy_v0.1
 ![alt text](./images/screenshots.png)
+
+## Introduction to NEpy
 *The simplified version of [NEpy](http://git.starlab.es/Sanchez/NEpy.git "Original NEpy") for Neuroelectrics team.*
 
 This is the repository for *NEpy*, a toolbox to work with [Neuroelectrics](https://www.neuroelectrics.com/ "NE homepage") 
@@ -56,6 +58,6 @@ Check the *CONTRIBUTING.md* file for more information.
 Main: Giulio Ruffini and Roser Sanchez  
 Contributors: Sergi Aregall and Javier Acedo.
 
-#####Neuroelectrics, November 2018
+####Neuroelectrics, November 2018
 
 ![alt text](./images/enobio.jpg)
