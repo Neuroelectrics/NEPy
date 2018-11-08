@@ -1,4 +1,4 @@
-# NEpy_v0.1
+# NEpy
 ![alt text](./images/screenshots.png)
 
 ## Introduction to NEpy
@@ -29,7 +29,7 @@ can find a description of the module, its main attributes, methods and useful ex
 
 Example:
 ```
-nepypath = 'C:\Users\roser.sanchez\Documents\Git\NEpy_v0.1'
+nepypath = 'C:\Users\roser.sanchez\Documents\Git\NEpy'
 
 import sys
 sys.path.append(nepypath)
@@ -43,7 +43,7 @@ Check the [Jupyter Notebook Demos](http://git.starlab.es/Sanchez/nepy_support/tr
 (or .html version) for an example on how to proper use this module! 
 
 ## Contributing
-1. Fork it ()
+1. Fork it (http://git.starlab.es/nepy/nepy/forks/new)
 2. Create your feature branch (`git checkout -b feature/newfeature`)
 3. Commit your changes (`git commit -am 'Add some newfeature'`)
 4. Push to the branch (`git push origin feature/newfeature`)
