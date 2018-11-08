@@ -1,6 +1,7 @@
 """
 Batch processor tools, will apply pipelines properly  to files in a dir
 Created on Sat Feb  3 09:20:00 2018
+Modified on Tue Nov 6 07:49:55 2018
 
 @author: giulio
 """
@@ -14,7 +15,7 @@ from nepy.frida.frida import Frida
 
 
 def processDirectory(datadir, author='anonymous', pipeline=None, parameters=None):
-    """ Process all .easy or .easy.gz files in data's directory using frida.
+    """ Process all .easy or .easy.gz files in data's directory using Frida.
     :param datadir: directory of the folder containing the data.
     :param author: ('anonymous') user.
     :param pipeline: (['referenceData', 'detrendData', 'notch', 'filterDataA2B'])
@@ -26,7 +27,7 @@ def processDirectory(datadir, author='anonymous', pipeline=None, parameters=None
     """
 
     if pipeline is None:
-        pipeline = ['resetEEG', 'referenceData', 'detrendData', 'notch', 'bandpassfilter']
+        pipeline = ['resetEEG', 'rereferenceData', 'detrendData', 'notch', 'bandpassfilter']
 
     saved_args = locals()
     print("Running with these arguments:", saved_args)

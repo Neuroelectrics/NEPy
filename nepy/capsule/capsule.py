@@ -15,6 +15,34 @@ from nepy.readers.nedfReader import nedfReader
 
 
 class Capsule(object):
+    """
+    Overview:
+    Capsule is a python Object that stores all information extracted from an .easy, .easy.gz, .info
+    (if available) or .nedf file. It uses 'easyReader' and 'nedfReader' functions from readers module to read the files.
+
+    Attributes:
+        author:          Name of the user. Default: "anonymous"
+        capsuledate:     date when the capsule class is created
+        eegstartdate:    date when the EEG is recorded
+        log:             log containing all the preprocessing steps
+        filepath:        datapath (folder where all the data is stored) + filename (basename+extension)
+        basename:        name of the file without the extension nor the path
+        fs:              sampling frequency
+        num_channels:    number of channels
+        electrodes:      electrode list
+        np_time:         array of the time (seconds)
+        np_eeg:          array containing the EEG data. np_eeg.shape[0] is the maxspan and np_eeg.shape[1] are the
+                         channels.
+        np_eeg_original: raw data. Same shape as np_eeg
+        np_acc:          accelerometer data
+        np_markers:      markers (if any)
+        np_stim:         stim file, just if .nedf file
+        filenameroot:    root of the file / path
+        offsets:         from Frida checkOffsets()
+        sigmas:          from Frida checkOffsets()
+        PSD:             from Frida plotPSD()
+        bad_records:     y
+    """
     def __init__(self, filepath, author="anonymous"):
 
         # 1. Does the file exist? If not, provide help.
@@ -52,7 +80,7 @@ class Capsule(object):
         # From Readers
         self.capsuledate = time.strftime("%Y-%m-%d %H:%M")
         self.eegstartdate = rdr.eegstartdate
-        self.log = ["capsule created: " + self.capsuledate]
+        self.log = ["Object created: " + self.capsuledate]
         self.filepath = rdr.filepath
         self.basename = rdr.basename
         self.fs = rdr.fs
