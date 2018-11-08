@@ -24,9 +24,8 @@ can find a description of the module, its main attributes, methods and useful ex
 - Size: around 95,0 MB
 #### Installation
 1. Clone or download the NEpy repository in your computer.  
-2. Copy and paste the path where you have saved the repository in a variable
-3. Add this path to the Python environment
-4. Import nepy
+2. Add the path where the cloned/saved repository is to the Python environment.
+3. Import nepy
 
 Example:
 ```
@@ -40,26 +39,19 @@ from nepy.frida.frida import Frida
 from nepy.frida.batch import processDirectory
 ```
 
-Check our [Jupyter Notebook Demos](http://git.starlab.es/Sanchez/nepy_support/tree/master/demos " NE jupyter demos") 
-(or .html version) for a great example on how to proper use this module! 
+Check the [Jupyter Notebook Demos](http://git.starlab.es/Sanchez/nepy_support/tree/master/demos " NE jupyter demos") 
+(or .html version) for an example on how to proper use this module! 
 
 ## Contributing
-1. Fork it (<https://github.com/sr6033/lterm/fork>)
-2. Create your feature branch (`git checkout -b feature/fooBar`)
-3. Commit your changes (`git commit -am 'Add some fooBar'`)
-4. Push to the branch (`git push origin feature/fooBar`)
-5. Create a new Pull Request
-
-![alt text](./images/gitflow.png)
-
-Check the *CONTRIBUTING.md* file for more information.
+1. Fork it ()
+2. Create your feature branch (`git checkout -b feature/newfeature`)
+3. Commit your changes (`git commit -am 'Add some newfeature'`)
+4. Push to the branch (`git push origin feature/newfeature`)
+5. Create a new Merge Request (https://docs.gitlab.com/ee/user/project/merge_requests/)
 
 ## Authors
 Main: Giulio Ruffini and Roser Sanchez  
 Contributors: Sergi Aregall and Javier Acedo.
-
-## License
-This project is licensed under the MIT License - see the *LICENSE.md* file for details
 
 #### Neuroelectrics, November 2018
 
