@@ -58,6 +58,9 @@ Check the *CONTRIBUTING.md* file for more information.
 Main: Giulio Ruffini and Roser Sanchez  
 Contributors: Sergi Aregall and Javier Acedo.
 
+## License
+This project is licensed under the MIT License - see the *LICENSE.md* file for details
+
 #### Neuroelectrics, November 2018
 
 ![alt text](./images/enobio.jpg)
