@@ -106,7 +106,7 @@ class Frida(object):
 
         if parameters is None:
             self.param = {
-                'time_span': None,
+                'time_span': [0, self.c.np_eeg.shape[0]/self.c.fs],
                 'grab_seconds': 10.,
                 'detrend_time': 10.,
                 'QCthreshold': 75.,
@@ -144,7 +144,7 @@ class Frida(object):
             self.param = parameters
         span = [int(span[0]), int(span[1])]
         tspan = (span[1] - span[0]) / self.c.fs
-        if (tspan < parameters['grab_seconds']) or (tspan < parameters['grab_seconds']):
+        if (tspan < self.param['grab_seconds']) or (tspan < self.param['grab_seconds']):
             print('Unexpected input parameters!')
             print('Check that -grab_seconds- and -detrend_time- are smaller than -time_span-.')
             return
@@ -205,9 +205,7 @@ class Frida(object):
             pc = 100 * len(lista) / (self.c.num_channels * Maxtimeskips)
             print("channel {ch:<3} / {name:>5}, N= {ll:<4} (or {pc:2.1f}%)".format(
                 ch=ch, name=self.c.electrodes[ch], ll=len(lista), pc=pc))
-        print("\n---QC COMPLETE---")
-
-        return
+        print("\n---------QC COMPLETE---------")
 
     def preprocess(self, pipeline=None):
         """ Preprocess the data
@@ -229,7 +227,7 @@ class Frida(object):
         """
 
         if pipeline is None:
-            pipeline = ['resetEEG', 'referenceData', 'detrendData', 'notch', 'bandpassfilter']
+            pipeline = ['resetEEG', 'rereferenceData', 'detrendData', 'notch', 'bandpassfilter']
 
         print('---------PREPROCESSING---------')
         # print("-------------------------------")
@@ -253,7 +251,6 @@ class Frida(object):
         :param spacing: y axis space between channels. Default: 200uV
         :param fixlim: fix the y axis accordingly. Default: True.
         :param xlim: limits of time that you want to plot. Default=None, that means that we will plot all data we have.
-        :return: EEG plot.
         """
 
         c = self.c
