@@ -2,8 +2,6 @@
 ![alt text](./images/screenshots.png)
 
 ## Introduction to NEpy
-*The simplified version of [NEpy](http://git.starlab.es/Sanchez/NEpy.git "Original NEpy") for Neuroelectrics team.*
-
 This is the repository for *NEpy*, a toolbox to work with [Neuroelectrics](https://www.neuroelectrics.com/ "NE homepage") 
 EEG ``.easy`` and ``.easy.gz``(with or without ``.info`` files), or compressed ``.nedf`` files. See the 
 [Neuroelectrics wiki](https://www.neuroelectrics.com/wiki/index.php?title=Neuroelectric%27s_Wiki "NE wiki") for more 
