@@ -249,3 +249,34 @@ nedfTestData = {
         'num_samples': 90367
     },
 }
+
+nedfOnlyStimTestData = {
+    'SS8_1': {
+        'filename': '20200527203558_testboard_no_eeg_SS8',
+        'num_stim_samples': 21569,
+        'stim_rows' : [
+            {
+            'row' : 45,
+            'data' : [-13,	-1,	-1,	-1,	-1,	-1,	13,	-1]
+            },
+            {
+            'row' : 9029,
+            'data' : [327,	-1,	-1,	-1,	-1,	-1,	-327,	-1]
+            }
+        ]
+    },
+    'SS8_2': {
+        'filename': '20200527210001_testboard_no_eeg_SS8',
+        'num_stim_samples': 12472,
+        'stim_rows' : [
+            {
+            'row' : 257,
+            'data' : [77,	-19,	-19,	-19,	-19,	-1,	-1,	-1]
+            },
+            {
+            'row' : 10289,
+            'data' : [654,	-162,	-162,	-163,	-163,	-1,	-1,	-1]
+            }
+        ]
+    }
+}
