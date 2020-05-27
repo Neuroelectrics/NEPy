@@ -110,22 +110,30 @@ class nedfReader(object):
             try:
                 self.isaccon = xmldict['AccelerometerData'] == 'ON'
                 self.isstimon = 'STIMSettings' in xmldict
-                self.num_channels = int(xmldict['EEGSettings']['TotalNumberOfChannels'])
-                self.eegstartdate_unixtime = int(xmldict['StepDetails']['StartDate_firstEEGTimestamp'])
-                # want this in calendar format
-                valuedate = datetime.datetime.fromtimestamp(self.eegstartdate_unixtime / 1000.)
-                self.eegstartdate = valuedate.strftime('%Y-%m-%d %H:%M:%S')
-                # want a simple list of electrodes ordered by channel as in np_eeg
-                electrodesDict = dict(xmldict['EEGSettings']['EEGMontage'])
-                electrodesDictNumKey = {int(k[7:]): val for (k, val) in electrodesDict.items()}
-                self.electrodes = [electrodesDictNumKey[k] for k in sorted(electrodesDictNumKey)]
-                self.eegtotaltime = int(xmldict['EEGSettings']['EEGRecordingDuration'])  # seconds
-                self.fs = int(xmldict['EEGSettings']['EEGSamplingRate'])
-                self.samples = int(xmldict['EEGSettings']['NumberOfRecordsOfEEG'])
+                self.iseegon = 'EEGSettings' in xmldict
+                self.samples = 0
+                if self.iseegon:
+                    self.num_channels = int(xmldict['EEGSettings']['TotalNumberOfChannels'])
+                else:
+                    self.num_channels = int(xmldict['STIMSettings']['TotalNumberOfChannels'])
+                if self.iseegon:
+                    self.eegstartdate_unixtime = int(xmldict['StepDetails']['StartDate_firstEEGTimestamp'])
+                    # want this in calendar format
+                    valuedate = datetime.datetime.fromtimestamp(self.eegstartdate_unixtime / 1000.)
+                    self.eegstartdate = valuedate.strftime('%Y-%m-%d %H:%M:%S')
+                    # want a simple list of electrodes ordered by channel as in np_eeg
+                    electrodesDict = dict(xmldict['EEGSettings']['EEGMontage'])
+                    electrodesDictNumKey = {int(k[7:]): val for (k, val) in electrodesDict.items()}
+                    self.electrodes = [electrodesDictNumKey[k] for k in sorted(electrodesDictNumKey)]
+                    self.eegtotaltime = int(xmldict['EEGSettings']['EEGRecordingDuration'])  # seconds
+                    self.fs = int(xmldict['EEGSettings']['EEGSamplingRate'])
+                    self.samples = int(xmldict['EEGSettings']['NumberOfRecordsOfEEG'])
                 if self.isstimon:
                     self.stimtotaltime = int(xmldict['STIMSettings']['StimulationDuration'])+int(xmldict['STIMSettings']['RampDownDuration'])+int(xmldict['STIMSettings']['RampUpDuration'])+int(xmldict['STIMSettings']['ShamRampDuration'])
-                    # self.samples = self.stimtotaltime*self.fs
-                self.np_eeg = (np.zeros(shape=(self.samples, self.num_channels), dtype="float32"))
+                    if self.samples == 0: # No EEG in the file
+                        self.samples = int(xmldict['STIMSettings']['NumberOfRecordsOfStimulation']) // 2
+                if self.iseegon:
+                    self.np_eeg = (np.zeros(shape=(self.samples, self.num_channels), dtype="float32"))
                 if self.isstimon:
                     self.np_stim = (np.zeros(shape=(self.samples*2, self.num_channels), dtype="float32"))
                 if self.isaccon:
@@ -236,20 +244,21 @@ class nedfReader(object):
                         superacc.append(accsample)
                 else:
                     counteracc += 1
-            eegsample = []
-            for j in range(self.num_channels):
-                if self.nedfbytessize - self.bytesread < 3:
-                    print("  > [Error] Not enough bytes while reading EEG")
-                    return supereeg, superstim, superacc, supermarkers, supertime
-                byte1 = self.__getByte()
-                byte2 = self.__getByte()
-                byte3 = self.__getByte()
-                eegvar = byte1 * 65536 + byte2 * 256 + byte3
-                if byte1 >= 128:
-                    eegvar = (16777216 * 255) + eegvar - (16777216 * 256)
-                eegvar = (eegvar * 2.4 * 1000000000) / 6.0 / 8388607.0
-                eegsample.append(eegvar)
-            supereeg.append(eegsample)  
+            if self.iseegon:
+                eegsample = []
+                for j in range(self.num_channels):
+                    if self.nedfbytessize - self.bytesread < 3:
+                        print("  > [Error] Not enough bytes while reading EEG")
+                        return supereeg, superstim, superacc, supermarkers, supertime
+                    byte1 = self.__getByte()
+                    byte2 = self.__getByte()
+                    byte3 = self.__getByte()
+                    eegvar = byte1 * 65536 + byte2 * 256 + byte3
+                    if byte1 >= 128:
+                        eegvar = (16777216 * 255) + eegvar - (16777216 * 256)
+                    eegvar = (eegvar * 2.4 * 1000000000) / 6.0 / 8388607.0
+                    eegsample.append(eegvar)
+                supereeg.append(eegsample)  
             if self.isstimon:
                 for s in range(2):
                     stimsample = []
