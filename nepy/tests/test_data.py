@@ -252,7 +252,7 @@ nedfTestData = {
 
 nedfOnlyStimTestData = {
     'SS8_1': {
-        'filename': '20200527203558_testboard_no_eeg_SS8',
+        'filename': 'only_stim_files//20200527203558_testboard_no_eeg_SS8',
         'num_stim_samples': 21569,
         'stim_rows' : [
             {
@@ -266,7 +266,7 @@ nedfOnlyStimTestData = {
         ]
     },
     'SS8_2': {
-        'filename': '20200527210001_testboard_no_eeg_SS8',
+        'filename': 'only_stim_files//20200527210001_testboard_no_eeg_SS8',
         'num_stim_samples': 12472,
         'stim_rows' : [
             {
