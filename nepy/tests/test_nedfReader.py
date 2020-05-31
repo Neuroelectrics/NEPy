@@ -17,29 +17,37 @@ import datetime
 import numpy as np
 
 from nepy.tests.test_data import nedfTestData
+from nepy.tests.test_data import nedfOnlyStimTestData
 from nepy.readers.nedfReader import nedfReader
 from nepy.tests.test_data import testpath
 
 
-@pytest.fixture(scope='module')
-def nedf_readers():
-    """ Loading all the .easy files of the testfiles directory and then initializing a reader for each of them.
+def get_nedf_readers(dataSet):
+    """ Loading all the .nedf files of the testfiles directory and then initializing a reader for each of them.
     :return: a list of the readers for all files.
     """
     if os.path.isdir(testpath) is False:
         pytest.exit('The the -testfiles- folder path of your computer does not match with the one written '
                     'in test_data.py (testpath) ')
     rdrs = {}  # Dictionary containing a reader per test file.
-    for file in nedfTestData:
-        filepath = os.path.join(testpath, nedfTestData[file]['filename']+'.nedf')
+    for file in dataSet:
+        print(file)
+        filepath = os.path.join(testpath, dataSet[file]['filename']+'.nedf')
         try:
             rdrs[file] = nedfReader(filepath)
         except FileNotFoundError:
-            print('\033[1;31;0m There is a file missing: ', nedfTestData[file]['filename']+'.nedf')
+            print('\033[1;31;0m There is a file missing: ', dataSet[file]['filename']+'.nedf')
             print('\033[1;31;0mMake sure that the file exists in the folder.')
             pytest.exit()
     return rdrs
 
+@pytest.fixture(scope='module')
+def nedf_readers():
+    return get_nedf_readers(nedfTestData)
+    
+@pytest.fixture(scope='module')
+def nedf_readers2():
+    return get_nedf_readers(nedfOnlyStimTestData)
 
 def test_inits(nedf_readers):
     """ In this test we assert if all the information regarding file names is recorded correctly in the easyReader
@@ -94,5 +102,19 @@ def test_get10data(nedf_readers):
                 assert np.array_equal(np.round(eegdata),  np.round(nedf_readers[file].np_eeg[row_ind, :]))
                 # We can't assert the rest of the data since the sampling rate are different.
 
-
+def test_get_stim_data(nedf_readers2):
+    """ Test if the stim data is loaded correctly in a file with no EEG data """
+    for file in nedfOnlyStimTestData:
+        assert len(nedf_readers2[file].np_eeg) == 0
+        n_eeg_samples = nedfOnlyStimTestData[file]['num_stim_samples'] // 2
+        n_stim_samples = n_eeg_samples * 2
+        assert nedf_readers2[file].samples == n_eeg_samples
+        assert len(nedf_readers2[file].np_stim) == n_stim_samples
+        for rows in nedfOnlyStimTestData[file]['stim_rows']:
+            r = rows['row']
+            data = rows['data']
+            print(data)
+            stimdata = np.float32(np.array(data))
+            assert np.array_equal(np.round(stimdata), np.round(nedf_readers2[file].np_stim[r, :]))
+            
 
